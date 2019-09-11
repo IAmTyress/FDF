@@ -3,39 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/06 17:23:44 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/11 18:01:00 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/28 16:10:20 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 14:00:58 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-char	*ft_strnstr(const char *str1, const char *str2, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t		i;
-	size_t		j;
-	size_t		k;
-	int			found;
+	char	*big_ptr;
+	char	*new_b_strt;
+	char	*lit_ptr;
 
-	i = -1;
-	found = 1;
-	if (!(ft_strlen(str2)))
-		return ((char *)str1);
-	while (*(str1 + ++i) && i < len)
+	big_ptr = (char *)big;
+	if (!*little)
+		return (big_ptr);
+	while (*big_ptr)
 	{
-		j = 0;
-		if (*(str1 + i) == *(str2 + 0))
+		new_b_strt = big_ptr;
+		lit_ptr = (char *)little;
+		while (*big_ptr && *lit_ptr && *big_ptr == *lit_ptr)
 		{
-			k = i;
-			found = 1;
-			while (*(str1 + k) && *(str2 + j) && j < len && k < len)
-				if (*(str1 + k++) != *(str2 + j++))
-					found = 0;
-			if (found && !*(str2 + j))
-				return ((char *)str1 + i);
+			if ((size_t)(big_ptr - big) >= len)
+				return (NULL);
+			big_ptr++;
+			lit_ptr++;
 		}
+		if (!*lit_ptr)
+			return (new_b_strt);
+		big_ptr = new_b_strt + 1;
 	}
 	return (NULL);
 }

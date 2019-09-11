@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 17:33:45 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/10 17:36:58 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/29 10:35:10 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 13:59:48 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
 void	ft_putendl(char const *s)
 {
-	ft_putendl_fd(s, 1);
+	if (s)
+	{
+		ft_putendl_fd(s, 1);
+	}
 }

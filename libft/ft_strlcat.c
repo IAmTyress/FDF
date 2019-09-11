@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 19:46:22 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/12 17:30:51 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/27 19:33:48 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 14:00:32 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
+	size_t		remainder;
+	size_t		dlen;
 	char		*d;
 	const char	*s;
-	size_t		n;
-	size_t		dlen;
 
 	d = dst;
 	s = src;
-	n = dstsize;
-	while (n-- != 0 && *d != '\0')
+	remainder = size;
+	while (remainder-- != 0 && *d)
 		d++;
 	dlen = d - dst;
-	n = dstsize - dlen;
-	if (n == 0)
+	remainder = size - dlen;
+	if (remainder == 0)
 		return (dlen + ft_strlen(s));
-	while (*s != '\0')
+	while (*s)
 	{
-		if (n != 1)
+		if (remainder != 1)
 		{
 			*d++ = *s;
-			n--;
+			remainder--;
 		}
 		s++;
 	}

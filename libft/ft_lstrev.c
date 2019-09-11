@@ -3,29 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 18:18:30 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/06/27 18:19:49 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/30 19:53:06 by nmei              #+#    #+#             */
+/*   Updated: 2017/12/11 18:55:44 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
+#include <libft.h>
 
-void	ft_lstrev(t_list **alst)
+void	ft_lstrev(t_list **begin_list)
 {
-	t_list	*prev;
-	t_list	*cur;
-	t_list	*next;
+	t_list *new_begin;
+	t_list *temp_next;
 
-	prev = NULL;
-	cur = *alst;
-	while (cur != NULL)
+	if (begin_list)
 	{
-		next = cur->next;
-		cur->next = prev;
-		prev = cur;
-		cur = next;
+		new_begin = NULL;
+		while (*begin_list)
+		{
+			temp_next = (*begin_list)->next;
+			(*begin_list)->next = new_begin;
+			new_begin = *begin_list;
+			*begin_list = temp_next;
+		}
+		*begin_list = new_begin;
 	}
-	*alst = prev;
 }

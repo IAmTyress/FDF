@@ -3,33 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <rrosaura@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 19:17:47 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/07/04 17:09:18 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/29 11:04:50 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 13:58:56 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
+#include <libft.h>
 
 t_list	*ft_lstnew(void const *content, size_t content_size)
 {
 	t_list	*new;
 
-	new = malloc(sizeof(t_list));
-	if (!new)
+	if ((new = (t_list *)malloc(sizeof(*new))) == NULL)
 		return (NULL);
-	if (!content)
+	if (content)
 	{
-		new->content = NULL;
-		new->content_size = 0;
+		new->content = ft_memdup(content, content_size);
+		new->content_size = content_size;
 	}
 	else
 	{
-		if (!(new->content = malloc(content_size)))
-			return (NULL);
-		new->content = ft_memcpy(new->content, content, content_size);
-		new->content_size = content_size;
+		new->content = NULL;
+		new->content_size = 0;
 	}
 	new->next = NULL;
 	return (new);

@@ -3,29 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/03 20:21:32 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/10 15:10:21 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/27 17:21:43 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 13:59:38 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-void	*ft_memmove(void *dest, const void *source, size_t count)
+/*
+**	memmove checks if dst and src overlap
+**	If our dst is longer than source + 'len to copy' then we can just
+**	blindly copy forward as with memcpy.
+**
+**	However, if our dst is shorter than source + 'len to copy' then
+**	we should copy from the 'end' (i.e. from dst + len back to dst).
+*/
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	i;
-	char	*s1;
-	char	*s2;
+	unsigned char *end;
+	unsigned char *src_ptr;
+	unsigned char *dst_ptr;
 
-	i = -1;
-	s1 = dest;
-	s2 = (char *)source;
-	if (s1 < s2)
-		while (++i < count)
-			*(s1 + i) = *(s2 + i);
+	if ((size_t)dst - (size_t)src >= len)
+		return (ft_memcpy(dst, src, len));
 	else
-		while ((int)--count >= 0)
-			*(s1 + count) = *(s2 + count);
-	return (dest);
+	{
+		end = (unsigned char *)dst;
+		src_ptr = (unsigned char *)src + len;
+		dst_ptr = (unsigned char *)dst + len;
+		while (dst_ptr != end)
+			*--dst_ptr = *--src_ptr;
+	}
+	return (dst);
 }

@@ -3,33 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <rrosaura@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 15:14:23 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/07/04 17:05:29 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/29 13:18:51 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 13:58:53 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
 t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list	*list;
 	t_list	*new;
+	t_list	*new_start;
+	t_list	*tmp;
 
-	if (!lst || !f)
-		return (NULL);
-	list = f(lst);
-	new = list;
-	while (lst->next)
+	new = NULL;
+	tmp = (*f)(lst);
+	new = ft_lstnew(tmp->content, tmp->content_size);
+	new_start = new;
+	lst = lst->next;
+	if (new_start)
 	{
-		lst = lst->next;
-		if (!(list->next = f(lst)))
+		while (lst)
 		{
-			free(list->next);
-			return (NULL);
+			tmp = (*f)(lst);
+			new->next = ft_lstnew(tmp->content, tmp->content_size);
+			if (new->next)
+			{
+				new = new->next;
+				lst = lst->next;
+			}
+			else
+				return (NULL);
 		}
-		list = list->next;
 	}
-	return (new);
+	return (new_start);
 }

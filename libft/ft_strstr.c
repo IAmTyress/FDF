@@ -3,39 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/06 17:14:02 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/10 17:01:50 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/28 14:46:25 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 14:01:09 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-char	*ft_strstr(const char *str1, const char *str2)
+char	*ft_strstr(const char *big, const char *little)
 {
-	int		i;
-	int		j;
-	int		k;
-	int		check;
+	char *big_ptr;
+	char *new_b_strt;
+	char *lit_ptr;
 
-	check = 0;
-	i = -1;
-	if (!ft_strlen(str2))
-		return ((char *)str1);
-	while (*(str1 + ++i) && !check)
+	big_ptr = (char *)big;
+	if (!*little)
+		return (big_ptr);
+	while (*big_ptr)
 	{
-		if (*(str1 + i) == *(str2 + 0))
+		new_b_strt = big_ptr;
+		lit_ptr = (char *)little;
+		while (*big_ptr && *lit_ptr && *big_ptr == *lit_ptr)
 		{
-			j = 0;
-			k = i;
-			check = 1;
-			while (*(str2 + j))
-				if (*(str2 + j++) != *(str1 + k++))
-					check = 0;
-			if (check)
-				return ((char *)str1 + i);
+			big_ptr++;
+			lit_ptr++;
 		}
+		if (!*lit_ptr)
+			return (new_b_strt);
+		big_ptr = new_b_strt + 1;
 	}
 	return (NULL);
 }

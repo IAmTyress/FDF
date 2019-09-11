@@ -3,32 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <rrosaura@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/09 15:56:05 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/12 17:25:22 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/28 19:28:15 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 14:01:15 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
+#include <libft.h>
 
-char	*ft_strtrim(char const *s)
+/*
+**	If we get an empty string or only spaces string then we want to
+**	return an empty string. We return ft_strdup("") becuase normally
+**	the malloc'd "trim" would then be freed at some point. If we only returned
+**	return(""); then trying to free a const char would end badly.
+**
+**	The (s || (trim = NULL)) is a stupid ugly hack because apparently if you
+**	want function security and also want an under 25 line function, too bad...
+**	(trim = NULL) part will always evaluate out to 'false'. If 's' doesn't exist
+**	then we return trim, which we happened to assign as NULL. If 's' does exist
+**	then great, 'True || False' (i.e. 's || (trim = NULL)') also turns true...
+*/
+
+static int	is_wspace(char c)
 {
-	unsigned int	size;
-	unsigned int	spaces;
-	unsigned int	start;
-	char			*str;
+	if (c == ' ' || c == '\n' || c == '\t')
+		return (1);
+	else
+		return (0);
+}
 
-	if (!s)
-		return (NULL);
-	size = (unsigned int)ft_strlen((char *)s);
-	spaces = ft_findstart((char *)s, " \n\t");
-	start = spaces;
-	if (size > spaces)
-		spaces += ft_findend((char *)s, " \n\t");
-	size -= spaces;
-	if (!(str = ft_memalloc((size_t)size + 1)))
-		return (NULL);
-	str = ft_strncpy(str, (char *)s + start, size);
-	return (str);
+char		*ft_strtrim(char const *s)
+{
+	const char		*strt;
+	const char		*end;
+	char			*trim;
+	char			*tmp;
+
+	if (s || (trim = NULL))
+	{
+		while (is_wspace(*s))
+			s++;
+		if (*(strt = s) == '\0')
+			return (ft_strdup(""));
+		while (*s)
+			s++;
+		while (is_wspace(*s) || *s == '\0')
+			s--;
+		end = ++s;
+		if ((trim = (char *)malloc(((end - strt) + 1) * sizeof(*trim))))
+		{
+			tmp = trim;
+			while (end - strt != 0)
+				*tmp++ = *strt++;
+			*tmp = '\0';
+		}
+	}
+	return (trim);
 }

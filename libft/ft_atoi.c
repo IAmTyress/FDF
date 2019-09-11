@@ -3,60 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/06 20:39:30 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/08 18:08:37 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/08/11 10:50:07 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 16:35:52 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-static int	make_res(const char *str, _Bool sign)
+static int		is_spacer(char c)
 {
-	long long	res;
-	long long	max;
-
-	res = 0;
-	max = 9223372036854775807;
-	while (*str)
+	if (c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == '\v')
 	{
-		if (*str >= '0' && *str <= '9')
-		{
-			if ((sign && (res <= ((max - (*str - '0')) / 10))) ||
-			(!sign && (-res >= ((-max - 1 + (*str - '0')) / 10))))
-				res = res * 10 + (*str - '0');
-			else if (sign)
-				return (-1);
-			else if (!sign)
-				return (0);
-		}
-		else
-			break ;
-		str++;
+		return (1);
 	}
-	if (sign == 0)
-		res = -res;
-	return ((int)res);
+	if (c == '\f')
+	{
+		return (1);
+	}
+	else
+	{
+		return (0);
+	}
 }
 
-int			ft_atoi(const char *str)
+int				ft_atoi(char *str)
 {
-	_Bool	is_neg;
+	int result;
+	int sign;
 
-	is_neg = 1;
-	while (*str && (*str == ' ' || *str == '\t' || *str == '\r'
-				|| *str == '\f' || *str == '\v' || *str == '\n'))
-		++str;
-	if (*str == '-')
+	result = 0;
+	sign = -1;
+	while (is_spacer(*str))
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		is_neg = 0;
-		++str;
+		if (*str == '-')
+			sign = 1;
+		str++;
 	}
-	else if (*str == '+')
+	while (ft_isdigit(*str))
 	{
-		is_neg = 1;
-		++str;
+		result *= 10;
+		result -= *str - '0';
+		str++;
 	}
-	return (make_res(str, is_neg));
+	return (sign * result);
 }

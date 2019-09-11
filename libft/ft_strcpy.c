@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 19:01:52 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/06 19:04:14 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/08/14 10:27:01 by nmei              #+#    #+#             */
+/*   Updated: 2017/12/09 18:27:15 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+/*
+** A more verbose but equivalent method would be:
+** while ((*dest++ = *src++) != '\0')
+*/
 
-char	*ft_strcpy(char *str1, const char *str2)
+char	*ft_strcpy(char *dest, char *src)
 {
-	int	i;
+	char *dest_start;
 
-	i = 0;
-	while (str2[i])
-	{
-		str1[i] = str2[i];
-		i++;
-	}
-	str1[i] = '\0';
-	return (str1);
+	dest_start = dest;
+	while ((*dest++ = *src++))
+		;
+	return (dest_start);
 }

@@ -3,26 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/03 20:46:17 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/10 15:10:29 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/27 18:47:22 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 13:59:23 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-void	*ft_memchr(const void *arr, int c, size_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	i;
-	char	*s1;
-	char	symb;
+	unsigned char *src_ptr;
 
-	i = -1;
-	symb = (char)c;
-	s1 = (char *)arr;
-	while (++i < n)
-		if (*(s1 + i) == symb)
-			return ((void *)s1 + i);
+	src_ptr = (unsigned char *)s;
+	while (n--)
+	{
+		if (*src_ptr == (unsigned char)c)
+			return (src_ptr);
+		src_ptr++;
+	}
 	return (NULL);
 }

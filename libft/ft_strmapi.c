@@ -3,31 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/09 13:31:37 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/12 19:46:26 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/28 18:49:32 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 14:00:42 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
+#include <libft.h>
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char				*mem;
-	unsigned int		i;
+	char			*map_str;
+	char			*start;
+	unsigned int	len;
+	unsigned int	ind;
 
-	i = 0;
-	if (!s || !f)
-		return (NULL);
-	mem = (char *)malloc(sizeof(*s) * ft_strlen(s) + 1);
-	if (!mem)
-		return (NULL);
-	while (s[i])
+	if (s && (*f))
 	{
-		mem[i] = f(i, s[i]);
-		i++;
+		len = (unsigned int)ft_strlen(s);
+		ind = 0;
+		map_str = (char *)malloc((len + 1) * sizeof(*map_str));
+		if (map_str)
+		{
+			map_str[len] = '\0';
+			start = map_str;
+			while (ind < len)
+			{
+				*map_str++ = (*f)(ind++, *s++);
+			}
+			return (start);
+		}
 	}
-	mem[i] = '\0';
-	return (mem);
+	return (NULL);
 }

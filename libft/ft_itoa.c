@@ -3,52 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 17:38:36 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/11 12:57:38 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/27 19:37:21 by nmei              #+#    #+#             */
+/*   Updated: 2017/12/01 13:06:05 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
+#include <libft.h>
 
-static int	nb_size(unsigned int nb)
+static int		itoa_len(int num, int base)
 {
-	unsigned int	i;
+	int count;
 
-	i = 0;
-	while (nb >= 10)
+	count = 0;
+	while (num != 0)
 	{
-		nb /= 10;
-		++i;
+		num = num / base;
+		count++;
 	}
-	return (i + 1);
+	return (count);
 }
 
-char		*ft_itoa(int n)
+char			*ft_itoa(int nbr)
 {
-	unsigned int	nbr;
-	char			*str;
-	unsigned int	i;
-	unsigned int	size;
+	char	*result;
+	int		len;
+	int		ind;
 
-	if (n < 0)
-		nbr = (unsigned int)(n * -1);
-	else
-		nbr = (unsigned int)n;
-	size = (unsigned int)nb_size(nbr);
-	i = 0;
-	if (!(str = (char *)malloc(sizeof(char) * (size + 1 + (n < 0 ? 1 : 0)))))
-		return (0);
-	if (n < 0 && (str[i] = '-'))
-		size++;
-	i = size - 1;
-	while (nbr >= 10)
+	ind = 0;
+	len = itoa_len(nbr, 10);
+	if (nbr < 0)
+		len = len + 1;
+	if (nbr == 0)
+		len = 1;
+	result = NULL;
+	if ((result = (char *)malloc(sizeof(*result) * (len + 1))))
 	{
-		str[i--] = (char)(nbr % 10 + 48);
-		nbr /= 10;
+		if (nbr < 0)
+			result[0] = '-';
+		if (nbr == 0)
+			result[0] = '0';
+		while (nbr != 0)
+		{
+			result[(len - ind++) - 1] = ft_abs(nbr % 10) + '0';
+			nbr = nbr / 10;
+		}
+		result[len] = '\0';
 	}
-	str[i] = (char)(nbr % 10 + 48);
-	str[size] = '\0';
-	return (str);
+	return (result);
 }

@@ -3,28 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/03 20:00:12 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/10 15:10:13 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/27 16:38:34 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 13:59:20 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-void	*ft_memccpy(void *dest, const void *src, int ch, size_t count)
+/*
+**	First assign value of src_ptr to dst_ptr then check if dst_ptr == c
+*/
+
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	size_t	i;
-	char	*s1;
+	unsigned char *dst_ptr;
+	unsigned char *src_ptr;
 
-	i = 0;
-	s1 = dest;
-	while (i < count)
+	dst_ptr = (unsigned char *)dst;
+	src_ptr = (unsigned char *)src;
+	while (n--)
 	{
-		*(s1 + i) = *((unsigned char *)src + i);
-		if (*((unsigned char *)src + i) == (unsigned char)ch)
-			return (dest + i + 1);
-		i++;
+		if ((*dst_ptr++ = *src_ptr++) == (unsigned char)c)
+			return (dst_ptr);
 	}
 	return (NULL);
 }

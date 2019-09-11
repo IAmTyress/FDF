@@ -3,28 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrosaura <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nmei <nmei@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/06 16:05:56 by rrosaura          #+#    #+#             */
-/*   Updated: 2019/04/07 18:16:41 by rrosaura         ###   ########.fr       */
+/*   Created: 2017/11/28 14:36:59 by nmei              #+#    #+#             */
+/*   Updated: 2017/11/30 14:01:01 by nmei             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
-	int	k;
+	const char *last_match;
 
-	k = 0;
-	i = -1;
-	while (++i < (int)ft_strlen(s) + 1)
-		if (*(s + i) == (char)c)
-			k = i;
-	while (--i > k)
-		;
-	if (*(s + i) == (char)c)
-		return ((char *)s + i);
+	last_match = NULL;
+	while (*s)
+	{
+		if (*s == (char)c)
+			last_match = s;
+		s++;
+	}
+	if (*s == (char)c)
+		return ((char *)s);
+	if (last_match)
+		return ((char *)last_match);
 	return (NULL);
 }
